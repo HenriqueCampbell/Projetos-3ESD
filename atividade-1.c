@@ -39,9 +39,9 @@ int main()
     }
 
     ordenarIdades (vIdades, 10);
-    exibirEntrevistados (vIdades, 10);
+    exibirOrdemAlternativa (vIdades, 10);
     ordenarNomes (vNomes, 10);
-    exibirEntrevistados (vNomes, 10);
+    exibirOrdemAlternativa (vNomes, 10);
     exibirOrdemOriginal (vEnt, 10);
 
   /* vNomes[0]=&vEnt[1];
