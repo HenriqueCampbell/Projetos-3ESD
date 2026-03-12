@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 struct opiniao {
   char nome[10];
@@ -11,6 +12,8 @@ void ordenarNomes (tOp **vNomes, int tamanho);
 void ordenarIdades (tOp **vIdades, int tamanho);
 void exibirOrdemOriginal (tOp *vEnt, int tamanho);
 void exibirOrdemAlternativa (tOp **v, int tamanho);
+void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam);
+void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int **tam);
 
 void preenche(tOp * p,int i)
 {
@@ -25,34 +28,33 @@ void preenche(tOp * p,int i)
 
 int main() 
 {
-  tOp vEnt[10];
-  tOp * vNomes[10];
-  tOp * vIdades[10];
+    tOp vEnt[10];
+    tOp * vNomes[10];
+    tOp * vIdades[10];
 
-  for(int i=0;i<10;i++)
-    preenche(&vEnt[i],i);
+    int i, totalEntrevistados;
+    totalEntrevistados = 10;
 
-    for(int i=0; i<10; i++) 
-    {
-        vNomes[i] = &vEnt[i];
-        vIdades[i] = &vEnt[i];
-    }
+    for(i=0;i<10;i++)
+        preenche(&vEnt[i],i);
 
-    ordenarIdades (vIdades, 10);
-    exibirOrdemAlternativa (vIdades, 10);
-    ordenarNomes (vNomes, 10);
-    exibirOrdemAlternativa (vNomes, 10);
-    exibirOrdemOriginal (vEnt, 10);
+        for(i=0; i<10; i++) 
+        {
+            vNomes[i] = &vEnt[i];
+            vIdades[i] = &vEnt[i];
+        }
 
-  /* vNomes[0]=&vEnt[1];
-  vNomes[1]=&vEnt[2];
-  vNomes[2]=&vEnt[0];
+        menu (vEnt, vNomes, vIdades, &totalEntrevistados);
 
-  vIdades[0]=&vEnt[0];
-  vIdades[1]=&vEnt[2];
-  vIdades[2]=&vEnt[1]; */
+    /* vNomes[0]=&vEnt[1];
+    vNomes[1]=&vEnt[2];
+    vNomes[2]=&vEnt[0];
 
-  return 0;
+    vIdades[0]=&vEnt[0];
+    vIdades[1]=&vEnt[2];
+    vIdades[2]=&vEnt[1]; */
+
+    return 0;
 }
 
 void ordenarIdades (tOp **vIdades, int tamanho)
@@ -109,3 +111,76 @@ void exibirOrdemAlternativa (tOp **v, int tamanho)
     }
 }
 
+void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
+{
+    int opcao;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Exibir ordem original\n");
+        printf("2. Exibir ordem por idade\n");
+        printf("3. Exibir ordem por nome\n");
+        printf("4. Adicionar entrevistado\n");
+        printf("5. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                exibirOrdemOriginal(vEnt, *tam);
+                break;
+            case 2:
+                ordenarIdades(vIdades, *tam);
+                exibirOrdemAlternativa(vIdades, *tam);
+                break;
+            case 3:
+                ordenarNomes(vNomes, *tam);
+                exibirOrdemAlternativa(vNomes, *tam);
+                break;
+            case 4:
+                adicionarEntrevistado(&vEnt, &vNomes, &vIdades, &tam);
+                break;
+            case 5:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+        }
+    } while (opcao != 5);
+}
+
+// Tem que lembrar que tudo que era 2 ** nas funções anteriores agora tem que ser 3 *** ACHO que porque essa é uma função dentro de uma função dentro da main ou seja inception.
+
+void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int **tam)
+{
+    tOp *tempEnt = realloc(*vEnt, (*tam + 1) * sizeof(tOp));
+    tOp **tempNome = realloc(*vNomes, (*tam + 1) * sizeof(tOp*));
+    tOp **tempIdade = realloc(*vIdades, (*tam + 1) * sizeof(tOp*));
+
+    if (vEnt == NULL || vNomes == NULL || vIdades == NULL) {
+        printf("Erro ao re-alocar memória.\n");
+        return;
+    }
+    (*tam)++;
+
+    *vEnt = tempEnt;
+    *vNomes = tempNome;
+    *vIdades = tempIdade;
+
+    printf("Digite o nome do novo entrevistado: ");
+    scanf("%s", vEnt[*tam - 1].nome);
+    printf("Digite a idade do novo entrevistado: ");
+    scanf("%d", &vEnt[*tam - 1].idade);
+    for (int i = 0; i < 3; i++) {
+        printf("Digite a nota %d do novo entrevistado: ", i + 1);
+        scanf("%d", &vEnt[*tam - 1].vPref[i]);
+    }
+
+    (*vNomes)[*tam] = &((*vEnt)[*tam]);
+    (*vIdades)[*tam] = &((*vEnt)[*tam]);
+
+    (*tam)++;
+
+    printf("Entrevistado adicionado com sucesso!\n");
+    return;
+}
