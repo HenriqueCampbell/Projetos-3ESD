@@ -126,7 +126,7 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
         printf("3. Exibir ordem por nome\n");
         printf("4. Adicionar entrevistado\n");
         printf("5. Sair\n");
-        printf("Escolha uma opçaoo: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
@@ -149,7 +149,7 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
                 printf("Saindo...\n");
                 break;
             default:
-                printf("Opçao inválida. Tente novamente.\n");
+                printf("Opcao inválida. Tente novamente.\n");
         }
     } while (opcao != 5);
 }
