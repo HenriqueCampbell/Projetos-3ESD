@@ -13,7 +13,7 @@ void ordenarIdades (tOp **vIdades, int tamanho);
 void exibirOrdemOriginal (tOp *vEnt, int tamanho);
 void exibirOrdemAlternativa (tOp **v, int tamanho);
 void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam);
-void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int **tam);
+void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam); // 3 * porque é uma função que recebe os ponteiros de ponteiros ... enfim inception.
 
 void preenche(tOp * p,int i)
 {
@@ -28,12 +28,16 @@ void preenche(tOp * p,int i)
 
 int main() 
 {
-    tOp vEnt[10];
-    tOp * vNomes[10];
-    tOp * vIdades[10];
-
+    //tOp vEnt[10];
+    //tOp * vNomes[10];
+    //tOp * vIdades[10];
+    
     int i, totalEntrevistados;
     totalEntrevistados = 10;
+
+    tOp *vEnt = malloc(totalEntrevistados * sizeof(tOp));
+    tOp **vNomes = malloc(totalEntrevistados * sizeof(tOp*));
+    tOp **vIdades = malloc(totalEntrevistados * sizeof(tOp*));
 
     for(i=0;i<10;i++)
         preenche(&vEnt[i],i);
@@ -44,7 +48,7 @@ int main()
             vIdades[i] = &vEnt[i];
         }
 
-        menu (vEnt, vNomes, vIdades, &totalEntrevistados);
+        menu (&vEnt, &vNomes, &vIdades, &totalEntrevistados);
 
     /* vNomes[0]=&vEnt[1];
     vNomes[1]=&vEnt[2];
@@ -149,38 +153,41 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
     } while (opcao != 5);
 }
 
-// Tem que lembrar que tudo que era 2 ** nas funções anteriores agora tem que ser 3 *** ACHO que porque essa é uma função dentro de uma função dentro da main ou seja inception.
-
-void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int **tam)
+void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam)
 {
+    //O tempEnt do realloc vai diminuir uma * dos asteriscos que foram subindo por causa da função recebendo os ponteiros de ponteiros de ponteiros... Muita indexação, mas é isso mesmo.
+
     tOp *tempEnt = realloc(*vEnt, (*tam + 1) * sizeof(tOp));
     tOp **tempNome = realloc(*vNomes, (*tam + 1) * sizeof(tOp*));
     tOp **tempIdade = realloc(*vIdades, (*tam + 1) * sizeof(tOp*));
 
-    if (vEnt == NULL || vNomes == NULL || vIdades == NULL) {
+    if (tempEnt == NULL || tempNome == NULL || tempIdade == NULL) {
         printf("Erro ao re-alocar memória.\n");
         return;
     }
-    (*tam)++;
 
+    // Atualiza os ponteiros na main
     *vEnt = tempEnt;
     *vNomes = tempNome;
     *vIdades = tempIdade;
 
+    // Tem que usar o *tam como contador, ele ainda está apontando para a última posição válida para realizar a inserção.
     printf("Digite o nome do novo entrevistado: ");
-    scanf("%s", vEnt[*tam - 1].nome);
+    scanf("%s", (*vEnt)[*tam].nome); 
+    
     printf("Digite a idade do novo entrevistado: ");
-    scanf("%d", &vEnt[*tam - 1].idade);
+    scanf("%d", &((*vEnt)[*tam].idade));
+
     for (int i = 0; i < 3; i++) {
-        printf("Digite a nota %d do novo entrevistado: ", i + 1);
-        scanf("%d", &vEnt[*tam - 1].vPref[i]);
+        printf("Digite a nota %d: ", i + 1);
+        scanf("%d", &((*vEnt)[*tam].vPref[i]));
     }
 
+    // Atualiza os ponteiros para o novo entrevistado
     (*vNomes)[*tam] = &((*vEnt)[*tam]);
     (*vIdades)[*tam] = &((*vEnt)[*tam]);
 
-    (*tam)++;
+    (*tam)++; 
 
     printf("Entrevistado adicionado com sucesso!\n");
-    return;
 }
