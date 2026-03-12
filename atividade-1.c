@@ -12,8 +12,8 @@ void ordenarNomes (tOp **vNomes, int tamanho);
 void ordenarIdades (tOp **vIdades, int tamanho);
 void exibirOrdemOriginal (tOp *vEnt, int tamanho);
 void exibirOrdemAlternativa (tOp **v, int tamanho);
-void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam);
-void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam); // 3 * porque é uma função que recebe os ponteiros de ponteiros ... enfim inception.
+void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam); //(tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
+void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam); //  3 * porque é uma função que recebe os ponteiros de ponteiros ... enfim inception.
 
 void preenche(tOp * p,int i)
 {
@@ -126,7 +126,7 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
         printf("3. Exibir ordem por nome\n");
         printf("4. Adicionar entrevistado\n");
         printf("5. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opçaoo: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
@@ -143,13 +143,13 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
                 break;
             case 4:
                 //adicionarEntrevistado(&vEnt, &vNomes, &vIdades, &tam);
-                printf("Função de adicionar entrevistado não foi implementada.\n");
+                printf("Função de adicionar entrevistado nao foi implementada.\n");
                 break;
             case 5:
                 printf("Saindo...\n");
                 break;
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                printf("Opçao inválida. Tente novamente.\n");
         }
     } while (opcao != 5);
 }
