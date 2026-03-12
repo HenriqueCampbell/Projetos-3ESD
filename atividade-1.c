@@ -28,16 +28,16 @@ void preenche(tOp * p,int i)
 
 int main() 
 {
-    //tOp vEnt[10];
-    //tOp * vNomes[10];
-    //tOp * vIdades[10];
+    tOp vEnt[10];
+    tOp * vNomes[10];
+    tOp * vIdades[10];
     
     int i, totalEntrevistados;
     totalEntrevistados = 10;
 
-    tOp *vEnt = malloc(totalEntrevistados * sizeof(tOp));
-    tOp **vNomes = malloc(totalEntrevistados * sizeof(tOp*));
-    tOp **vIdades = malloc(totalEntrevistados * sizeof(tOp*));
+    //tOp *vEnt = malloc(totalEntrevistados * sizeof(tOp));
+    //tOp **vNomes = malloc(totalEntrevistados * sizeof(tOp*));
+    //tOp **vIdades = malloc(totalEntrevistados * sizeof(tOp*));
 
     for(i=0;i<10;i++)
         preenche(&vEnt[i],i);
@@ -48,7 +48,7 @@ int main()
             vIdades[i] = &vEnt[i];
         }
 
-        menu (&vEnt, &vNomes, &vIdades, &totalEntrevistados);
+        menu (vEnt, vNomes, vIdades, &totalEntrevistados);
 
     /* vNomes[0]=&vEnt[1];
     vNomes[1]=&vEnt[2];
@@ -142,7 +142,8 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
                 exibirOrdemAlternativa(vNomes, *tam);
                 break;
             case 4:
-                adicionarEntrevistado(&vEnt, &vNomes, &vIdades, &tam);
+                //adicionarEntrevistado(&vEnt, &vNomes, &vIdades, &tam);
+                printf("Função de adicionar entrevistado não foi implementada.\n");
                 break;
             case 5:
                 printf("Saindo...\n");
@@ -155,6 +156,8 @@ void menu (tOp *vEnt, tOp **vNomes, tOp **vIdades, int *tam)
 
 void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam)
 {
+    /* Não consigo cumprir este desafio de adicionar um entrevistando usando memória dinâmica.
+    
     //O tempEnt do realloc vai diminuir uma * dos asteriscos que foram subindo por causa da função recebendo os ponteiros de ponteiros de ponteiros... Muita indexação, mas é isso mesmo.
 
     tOp *tempEnt = realloc(*vEnt, (*tam + 1) * sizeof(tOp));
@@ -190,4 +193,6 @@ void adicionarEntrevistado(tOp **vEnt, tOp ***vNomes, tOp ***vIdades, int *tam)
     (*tam)++; 
 
     printf("Entrevistado adicionado com sucesso!\n");
+
+    */
 }
