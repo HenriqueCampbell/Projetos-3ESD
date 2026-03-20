@@ -3,7 +3,7 @@
 
 #include "pedido.h"
 #include "Horario.h"
-#include ""
+#include "Entregador.h"
 
 struct entregas {
 Entregador** entregadores; // vetor dinâmico
