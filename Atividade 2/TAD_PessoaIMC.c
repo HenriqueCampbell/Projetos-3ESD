@@ -34,17 +34,17 @@ IMC *imc_cria(char *nome, Altura *alt, Peso *peso) {
 }
 
 /* Função altera peso - Altera o peso de um IMC */
-void imc_alteraPeso(IMC *p, Peso *g) {
-  Peso *novo_peso = peso_soma(p->peso, g);
-  peso_libera(p->peso);
-  p->peso = novo_peso;
+void imc_alteraPeso(IMC *p, int g_adicionais) {
+    Peso *novo_peso = peso_soma(p->peso, g_adicionais);
+    peso_libera(p->peso);
+    p->peso = novo_peso;
 }
 
 /* Função altera altura - Altera a altura de um IMC */
-void imc_alteraAltura(IMC *p, Altura *cm) {
-  Altura *nova_altura = alt_soma(p->altura, cm);
-  alt_libera(p->altura);
-  p->altura = nova_altura;
+void imc_alteraAltura(IMC *p, int cm_adicionais) {
+    Altura *nova_altura = alt_soma(p->altura, cm_adicionais);
+    alt_libera(p->altura);
+    p->altura = nova_altura;
 }
 
 /* Função libera - Libera a memória de um IMC previamente criado */
@@ -106,10 +106,13 @@ IMC *imc_copia(IMC *p) {
 
 /* Função Calcula IMC - Calcula o Índice de Massa Corporal */
 float imc_calculaIMC(IMC *p) {
-    int altura_cm = converteParacm(p->altura);
-    int peso_g = converteParag(p->peso);
-    float altura_m = altura_cm / 100.0;
-    float peso_kg = peso_g / 1000.0;
+    int m, cm, kg, g;
+    alt_acessa(p->altura, &m, &cm);
+    peso_acessa(p->peso, &kg, &g);
+
+    float altura_m = m + (cm / 100.0);
+    float peso_kg = kg + (g / 1000.0);
+
     return peso_kg / (altura_m * altura_m);
 }
 

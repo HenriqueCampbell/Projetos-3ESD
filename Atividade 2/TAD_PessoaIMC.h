@@ -13,16 +13,16 @@ typedef struct pessoaIMC IMC;
 IMC *imc_cria(char *nome, Altura *alt, Peso *peso);
 
 /* Função altera peso - Altera o peso de um IMC */
-void imc_alteraPeso(IMC *p, Peso *g);
+void imc_alteraPeso(IMC *p, int g_adicionais);
 
 /* Função altera altura - Altera a altura de um IMC */
-void imc_alteraAltura(IMC *p, Altura *cm);
+void imc_alteraAltura(IMC *p, int cm_adicionais);
 
 /* Função libera - Libera a memória de um IMC previamente criado */
 void imc_libera(IMC *p);
 
 /* Função acessa - Retorna os valores de um IMC */
-void imc_acessa(IMC *p, char* nome, Altura **alt, Peso **peso);
+void imc_acessa(IMC *p, char **nome, Altura **alt, Peso **peso);
 
 void imc_exibe(IMC* p);
 
