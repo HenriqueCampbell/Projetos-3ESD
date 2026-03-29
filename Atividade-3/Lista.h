@@ -26,7 +26,13 @@ int busca_des_srep(tLista *pl,int chave,int *pos);
 int busca_bin(tLista *pl, int chave, int *pos);
 // Encontra posInicial e qntdade de um elemento (valor) repetido numa lista
 void encontra_posInicEqt(tLista*pl,int * posRet, int *qt, int valor);
-//CHEGA PARA CÁ  ==> TRANSFORMAR PARA  memcpy
+//CHEGA PARA CÁ
 void chegaparaca(tLista *pl, int pos, int qt);
-// CHEGA PARA LÁ ==> TRANSFORMAR PARA  memcpy
+// CHEGA PARA LÁ
 void chegaparala(tLista *pl, int pos);
+//AGORA COM MEMCPY
+void chegaparacaMC(tLista *pl, int posRet, int qt);
+//AGORA COM MEMCPY
+void chegaparalaMC(tLista *pl, int pos, int qt);
+//Libera a memória
+void lista_libera(tLista *pl);
